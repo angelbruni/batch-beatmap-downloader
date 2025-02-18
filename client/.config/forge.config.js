@@ -8,6 +8,7 @@ console.log(packageAssetsPath);
 
 module.exports = {
   packagerConfig: {
+    executableName: "batch-beatmap-downloader",
     asar: true,
     icon: path.join(packageAssetsPath, "bbd.ico"),
   },
@@ -61,14 +62,23 @@ module.exports = {
       name: "@electron-forge/maker-deb",
       config: {
         // https://js.electronforge.io/maker/deb/interfaces/makerdebconfig
-        icon: path.join(packageAssetsPath, "bbd.png"),
+        name: '@electron-forge/maker-deb',
+        executableName: "batch-beatmap-downloader",
+        config: {
+            options: {
+                icon: path.join(packageAssetsPath, "bbd.png"),
+                name: 'batch-beatmap-downloader',
+                productName: 'batch-beatmap-downloader'
+            }
+          }
       },
     },
   ],
+  buildIdentifier: 'bbd-build',
   plugins: [
-    [
-      "@electron-forge/plugin-webpack",
-      {
+    {
+      name: "@electron-forge/plugin-webpack",
+      config: {
         mainConfig: "./.config/webpack.main.config.js",
         renderer: {
           config: "./.config/webpack.renderer.config.js",
@@ -84,7 +94,7 @@ module.exports = {
             },
           ],
         },
-      },
-    ],
+      }
+    }
   ],
 };
